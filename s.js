@@ -39,7 +39,7 @@ const pages = [
     tag: "#ldrstory",
   },
   {
-    foto: "ast/p6.webp",
+    foto: "p6.webp",
     judul: "Pesan Penting!! 📌",
     isi: "Jangan takut melakukan kesalahan,\nsetiap kesalahan adalah bagian\ndari proses belajar menuju\nkeberhasilan.\n\nFaa percaya kamu. ♥",
     caption: "Important Message",
