@@ -1,38 +1,38 @@
-const AUDIO_SRC = "ast/laguromantis.mp3";
+const AUDIO_SRC = "laguromantis.mp3";
 const AUDIO_VOLUME = 0.7;
 
 // 10 halaman — sesuai p1–p10
 const pages = [
   {
-    foto: "ast/p1.webp",
+    foto: "p1.webp",
     judul: "Special Forever 💌",
     isi: "Untuk kamu yang selalu ada\ndi setiap ceritaku...\n\nTerima kasih sudah hadir.",
     caption: "Our Story",
     tag: "#faareysha",
   },
   {
-    foto: "ast/p2.webp",
+    foto: "p2.webp",
     judul: "Momen Lucu Kita 😄",
     isi: "Filter aneh, snapchat absurd,\ntawa yang nggak ada habisnya —\nitu semua jadi kenangan.",
     caption: "Funny Moments",
     tag: "#sillytogether",
   },
   {
-    foto: "ast/p3.webp",
+    foto: "p3.webp",
     judul: "My Self & You",
     isi: "Berawal cuma minuman 2k itu,\nternyata malah menemukan\nseseorang manis, sedikit pemalu,\nsenyum tipis itu. ♥",
     caption: "First Encounter",
     tag: "#2kstory",
   },
   {
-    foto: "ast/p4.webp",
+    foto: "p4.webp",
     judul: "Notes Untuk Kamu 📝",
     isi: "Jujur faa tidak pernah nyangka\nakan merasakan perasaan seperti ini.\nKamu membuat hari-hari faa\nlebih berwarna dan semangat.",
     caption: "From the Heart",
     tag: "#honestwords",
   },
   {
-    foto: "ast/p5.webp",
+    foto: "p5.webp",
     judul: "LDR? Gapapa 🌸",
     isi: "Tidak setiap hari kita bertemu,\ntetapi setiap hari faa memilih\nuntuk mempercayaimu.\n\nLDR mengajarkan kita\nbahwa cinta bukan tentang\nselalu bersama. ♥",
     caption: "Trust & Distance",
@@ -46,28 +46,28 @@ const pages = [
     tag: "#pesanpenting",
   },
   {
-    foto: "ast/p7.webp",
+    foto: "p7.webp",
     judul: "Memory Book 📖",
     isi: "Setiap halaman ini adalah\nbagian dari cerita kita.\nSimpan baik-baik ya...",
     caption: "Our Memories",
     tag: "#memorybook",
   },
   {
-    foto: "ast/p8.webp",
+    foto: "p8.webp",
     judul: "Kolase Kita 🎞",
     isi: "Foto-foto konyol, ekspresi lucu,\nmoment random yang nggak terduga —\nsemuanya jadi bagian terindah\ncerita kita.",
     caption: "Collage of Us",
     tag: "#photostrip",
   },
   {
-    foto: "ast/p9.webp",
+    foto: "p9.webp",
     judul: "Aufa & Reysha ",
     isi: "\nDua orang berbeda kota,\nsatu perasaan yang sama. ♥",
     caption: "Us Together",
     tag: "#aufaareysha",
   },
   {
-    foto: "ast/p10.webp",
+    foto: "p10.webp",
     judul: "Untuk Selalu ♾",
     isi: "Bukan hanya hari ini,\ntapi selamanya —\nkamu adalah pilihanku.\n\nSemoga keinginan baik kita\ndisegerakan. ♥",
     caption: "Forever Mine",
