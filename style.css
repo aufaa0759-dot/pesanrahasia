@@ -1,0 +1,627 @@
+@import url("https://fonts.googleapis.com/css2?family=Sour+Gummy:ital,wght@0,100..900;1,100..900&family=Caveat:wght@400;600;700&display=swap");
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary: #805537;
+  --primary-dk: #5c3b22;
+  --primary-lt: #c49a70;
+  --cream: #f5ede0;
+  --cream-dk: #e8d5bb;
+  --paper: #faf5ed;
+  --ink: #3d2b1a;
+  --ink-lt: #7a5c40;
+  --tape: rgba(200, 170, 120, 0.7);
+
+  --shadow-soft: 0 4px 20px rgba(80, 50, 20, 0.18);
+  --shadow-card: 0 3px 12px rgba(80, 50, 20, 0.22);
+  --radius-book: 3px 12px 12px 3px;
+}
+
+body {
+  background: #d4b896;
+  font-family: "Sour Gummy", cursive;
+  overflow: hidden;
+  height: 100dvh;
+}
+
+/* ============================================================
+   PRELOADER
+   ============================================================ */
+.preload {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--cream);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.preload-heart {
+  font-size: 2.5rem;
+  color: var(--primary);
+  animation: heartbeat 1.2s ease infinite;
+}
+
+.preload-dots {
+  display: flex;
+  gap: 8px;
+}
+
+.preload-dots > div {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--primary);
+  animation: dot-bounce 0.9s ease infinite;
+}
+.preload-dots > div:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.preload-dots > div:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes heartbeat {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+}
+@keyframes dot-bounce {
+  0%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+}
+
+/* ============================================================
+   MAIN WRAPPER
+   ============================================================ */
+.main {
+  position: fixed;
+  inset: 0;
+  padding-top: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-size: cover;
+  background-position: center;
+}
+
+/* ============================================================
+   DECORATIVE ELEMENTS
+   ============================================================ */
+.elements {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.butterfly {
+  position: absolute;
+  top: 14px;
+  left: 10px;
+  transform: rotateZ(-12deg);
+  filter: drop-shadow(1px 2px 4px rgba(0, 0, 0, 0.2));
+}
+.butterfly img {
+  width: 90px;
+  animation: butterfly-flap 0.9s ease infinite;
+}
+
+.flower {
+  position: absolute;
+  width: 90px;
+  bottom: -8px;
+  right: 4px;
+  animation: flower-sway 2.5s ease-in-out infinite;
+  transform-origin: bottom center;
+  filter: drop-shadow(1px 2px 4px rgba(0, 0, 0, 0.15));
+}
+
+@keyframes butterfly-flap {
+  0%,
+  100% {
+    transform: scaleX(1);
+  }
+  50% {
+    transform: scaleX(0.55);
+  }
+}
+@keyframes flower-sway {
+  0%,
+  100% {
+    transform: rotateZ(-4deg) skewX(2deg);
+  }
+  50% {
+    transform: rotateZ(4deg);
+  }
+}
+
+/* ============================================================
+   BOOK
+   ============================================================ */
+.book {
+  position: relative;
+  width: 46vw;
+  max-width: 260px;
+  aspect-ratio: 360 / 540;
+  transition: all 0.5s ease;
+  border-radius: var(--radius-book);
+  z-index: 10;
+}
+
+/* Shadow when closed */
+.book.fs .paper:nth-child(1) {
+  box-shadow: -6px 5px 14px rgba(0, 0, 0, 0.45);
+}
+.book .paper:nth-child(1) {
+  transition: box-shadow 0.5s ease;
+  border-radius: var(--radius-book);
+}
+.book .paper:last-child .back::after {
+  position: absolute;
+  content: "";
+  inset: 0;
+  transition: box-shadow 0.5s ease;
+  border-radius: var(--radius-book);
+}
+.book.bs .paper:last-child .back::after {
+  box-shadow: 6px 5px 14px rgba(0, 0, 0, 0.4);
+}
+
+.paper {
+  position: absolute;
+  inset: 0;
+  perspective: 1500px;
+  perspective-origin: left;
+}
+
+/* ── Front & Back ─────────────────────────────────────────── */
+.front,
+.back {
+  position: absolute;
+  inset: 0;
+  transform-origin: left;
+  transition: transform 0.55s ease;
+  border-radius: var(--radius-book);
+  border-right: 2px solid rgba(255, 255, 255, 0.5);
+  background: var(--paper);
+  background-image: linear-gradient(-100deg, rgba(0, 0, 0, 0.45), var(--paper));
+}
+
+.front {
+  z-index: 1;
+  backface-visibility: hidden;
+  overflow: hidden;
+}
+.back {
+  z-index: 0;
+}
+
+.front-content,
+.back-content {
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(90deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.18)), var(--bg);
+  background-size: cover;
+  background-position: right;
+  border-radius: 3px 9px 9px 3px;
+}
+
+.back-content {
+  transform: rotateY(180deg);
+  background-position: left;
+  border-radius: 9px 3px 3px 9px;
+  overflow: hidden;
+}
+
+.flipped .front,
+.flipped .back {
+  transform: rotateY(-180deg);
+}
+
+/* ── Spine detail ─────────────────────────────────────────── */
+.paper:nth-child(1) .front {
+  border: none;
+}
+.paper:nth-child(1) .front .front-content {
+  box-shadow:
+    inset 2px 0 10px rgba(0, 0, 0, 0.65),
+    inset 0 2px 4px rgba(255, 255, 255, 0.85),
+    inset -2px 0 3px rgba(255, 255, 255, 0.25),
+    inset 0 -2px 7px rgba(0, 0, 0, 0.45) !important;
+}
+.paper:nth-child(1) .front::before {
+  content: "";
+  position: absolute;
+  height: calc(100% - 3px);
+  width: 2px;
+  background: rgba(0, 0, 0, 0.28);
+  box-shadow:
+    0 0 4px #fff,
+    0 0 2px rgba(0, 0, 0, 0.9);
+  left: 12px;
+  z-index: 2;
+}
+
+.paper:last-child .back {
+  border: none;
+}
+.paper:last-child .back .back-content {
+  box-shadow:
+    inset -7px 0 8px rgba(0, 0, 0, 0.45),
+    inset 0 2px 3px rgba(255, 255, 255, 0.5),
+    inset 0 -2px 7px rgba(0, 0, 0, 0.4) !important;
+  overflow: hidden;
+}
+.paper:last-child .back .back-content::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 2px;
+  background: rgba(0, 0, 0, 0.18);
+  box-shadow:
+    0 0 4px #fff,
+    0 0 2px rgba(0, 0, 0, 0.9);
+  right: 12px;
+  z-index: 99;
+}
+
+/* ============================================================
+   SCRAPBOOK PAGE CONTENT
+   ============================================================ */
+.scrapbook-page {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 8px 8px;
+  gap: 7px;
+  background: radial-gradient(ellipse at 30% 20%, rgba(205, 170, 120, 0.18) 0%, transparent 65%), linear-gradient(160deg, var(--paper) 0%, #f0e5d0 100%);
+  overflow: hidden;
+}
+
+/* Page number badge */
+.page-number {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  font-family: "Caveat", cursive;
+  font-size: 0.62rem;
+  color: var(--ink-lt);
+  letter-spacing: 1px;
+  opacity: 0.7;
+}
+
+/* ── Polaroid ─────────────────────────────────────────────── */
+.polaroid {
+  position: relative;
+  background: white;
+  padding: 5px 5px 22px;
+  box-shadow:
+    2px 3px 10px rgba(0, 0, 0, 0.22),
+    0 1px 3px rgba(0, 0, 0, 0.1);
+  width: 85%;
+  max-width: 175px;
+  transform: rotate(-1.5deg);
+  flex-shrink: 0;
+}
+
+.polaroid img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  display: block;
+}
+
+.polaroid-caption {
+  position: absolute;
+  bottom: 3px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: "Caveat", cursive;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--ink);
+  padding: 0 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Tape strips */
+.tape {
+  position: absolute;
+  height: 14px;
+  width: 42px;
+  background: var(--tape);
+  top: -6px;
+  z-index: 2;
+}
+.tape-left {
+  left: 14%;
+  transform: rotate(-3deg);
+}
+.tape-right {
+  right: 14%;
+  transform: rotate(3deg);
+}
+
+/* ── Story card ───────────────────────────────────────────── */
+.story-card {
+  background: white;
+  border-radius: 6px;
+  padding: 8px 10px 9px;
+  width: 88%;
+  box-shadow: var(--shadow-card);
+  position: relative;
+  transform: rotate(0.8deg);
+}
+
+.story-tag {
+  font-family: "Caveat", cursive;
+  font-size: 0.58rem;
+  color: var(--primary-lt);
+  letter-spacing: 0.5px;
+  margin-bottom: 1px;
+}
+
+.story-card h2 {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--primary-dk);
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+
+.story-divider {
+  width: 32px;
+  height: 1.5px;
+  background: var(--primary-lt);
+  margin-bottom: 5px;
+  border-radius: 2px;
+}
+
+.story-text {
+  font-family: "Caveat", cursive;
+  font-size: 0.7rem;
+  line-height: 1.55;
+  color: var(--ink);
+}
+.story-text p {
+  margin: 0;
+}
+.story-text br {
+  line-height: 0.8;
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn-container {
+  margin-top: 16px;
+  text-align: center;
+  z-index: 20;
+  position: relative;
+}
+
+.nav {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav button {
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  background: var(--primary);
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: -2px 2px 0 rgba(0, 0, 0, 0.2);
+  transition:
+    opacity 0.3s ease,
+    transform 0.15s ease;
+}
+
+.page-indicator {
+  font-family: "Caveat", cursive;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+  min-width: 44px;
+  text-align: center;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  letter-spacing: 1px;
+}
+
+button.open-btn,
+button.pesan-btn {
+  height: 42px;
+  padding: 0 22px;
+  letter-spacing: 1px;
+  font-size: 0.95rem;
+  font-family: "Sour Gummy", cursive;
+  background: var(--primary);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: -2px 2px 0 rgba(0, 0, 0, 0.2);
+  display: block;
+  margin: auto;
+}
+
+button:active {
+  transform: scale(0.92) !important;
+  box-shadow: -1px 1px 0 rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Show/hide states */
+.btn-container .open-btn:not(.show),
+.btn-container .nav:not(.show) {
+  display: none;
+}
+
+.pesan-btn {
+  margin-top: 14px !important;
+  visibility: hidden;
+}
+.pesan-btn.show {
+  visibility: visible;
+  animation: fade-up 0.5s ease forwards;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================================
+   FALLING HEARTS
+   ============================================================ */
+.bg-love {
+  position: fixed;
+  inset: -50px 0 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.love-item {
+  position: absolute;
+  top: 0;
+  user-select: none;
+  pointer-events: none;
+  animation-name: fall;
+  animation-timing-function: linear;
+  z-index: 1;
+}
+
+.love-item svg {
+  fill: #c18e6a;
+  opacity: 0.45;
+  width: 100%;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-120px) rotate(var(--rot, 0deg));
+  }
+  100% {
+    transform: translateY(115vh) rotate(var(--rot, 0deg));
+  }
+}
+
+/* ============================================================
+   SWEETALERT OVERRIDES
+   ============================================================ */
+.swal2-popup {
+  background: #f6f0e4 !important;
+  border-radius: 18px !important;
+  font-family: "Sour Gummy", cursive !important;
+  padding-bottom: 22px !important;
+}
+.swal2-title {
+  font-size: 1.35rem !important;
+  color: var(--ink) !important;
+}
+.swal2-popup textarea {
+  resize: none;
+  background: white !important;
+  box-shadow:
+    inset 2px 2px 5px rgba(0, 0, 0, 0.12),
+    1px 1px 2px white !important;
+  border-radius: 10px !important;
+  border: 1px solid var(--cream-dk) !important;
+}
+.swal2-actions button {
+  height: 40px !important;
+  padding: 0 18px !important;
+  font-family: "Sour Gummy", cursive !important;
+  font-size: 0.95rem !important;
+  background: var(--primary) !important;
+  color: white !important;
+  border-radius: 10px !important;
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  box-shadow: -2px 2px 0 rgba(0, 0, 0, 0.15) !important;
+}
+.swal2-actions button:focus {
+  box-shadow: none !important;
+}
+.swal2-actions button:active {
+  transform: scale(0.93) !important;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 380px) {
+  .book {
+    width: 52vw;
+  }
+  .story-card h2 {
+    font-size: 0.75rem;
+  }
+  .story-text {
+    font-size: 0.65rem;
+  }
+  .polaroid {
+    max-width: 155px;
+  }
+}
+
+@media (min-width: 600px) {
+  .book {
+    max-width: 300px;
+  }
+  .story-card h2 {
+    font-size: 0.95rem;
+  }
+  .story-text {
+    font-size: 0.78rem;
+  }
+}
